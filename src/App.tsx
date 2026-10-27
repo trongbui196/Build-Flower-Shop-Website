@@ -159,7 +159,7 @@ function Header({ openMenu, cart }: { openMenu: () => void; cart: number }) {
   return (
     <header className="site-header">
       <Action className="icon-button" onClick={openMenu} label="Mở menu"><Icon name="menu" /></Action>
-      <Action className="wordmark" onClick={() => navigate('/')} label="Về trang chủ"><img style={{ height: '1000px' }} src="/logo.png" alt="Soha Fleur Floral Studio" /></Action>
+      <Action className="wordmark" onClick={() => navigate('/')} label="Về trang chủ"><img src="/logo.png" alt="Soha Fleur Floral Studio" /></Action>
       <Action className="icon-button cart-button" onClick={() => navigate('/cart')} label="Giỏ hàng">
         <Icon name="bag" />{cart > 0 && <span className="cart-count">{cart}</span>}
       </Action>
