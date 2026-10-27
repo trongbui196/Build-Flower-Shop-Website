@@ -58,7 +58,7 @@
 .flower-stage { display: grid; place-items: center; position: relative; min-height: 29rem; width: min(48rem,100%); }
 .flower-card { width: min(18rem,45vw); height: 25rem; border-radius: .75rem; overflow: hidden; position: relative; box-shadow: 0 2rem 5rem #59604d26; }
 .flower-card img { width: 100%; height: 100%; object-fit: cover; transition: opacity .25s; }
-.flower-wheel { position: absolute; left: 2rem; top: 50%; z-index: 4; width: 9rem; height: 12rem; transform: translateY(-50%); perspective: 22rem; overflow: hidden; mask-image: linear-gradient(transparent,black 20%,black 80%,transparent); }
+.flower-wheel { position: absolute; left: 2rem; top: 50%; z-index: 4; width: 15rem; height: 12rem; transform: translateY(-50%); perspective: 22rem; }
 .wheel-line { position: absolute; top: 50%; right: 0; width: 1.5rem; height: 1px; background: var(--color-ink); }
 .wheel-item { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 .wheel-item span { --wheel-position: 0; position: absolute; right: 2.25rem; top: 50%; white-space: nowrap; color: #9da095; font-size: .68rem; transform: translateY(calc(-50% + (var(--wheel-position) * 2.5rem))) rotateX(calc(var(--wheel-position) * -18deg)) scale(calc(1 - (abs(var(--wheel-position)) * .08))); opacity: calc(1 - (abs(var(--wheel-position)) * .25)); transition: transform .58s cubic-bezier(.22,.8,.24,1), opacity .45s ease, color .35s ease, font-size .35s ease; transform-origin: right center; pointer-events: auto; }
