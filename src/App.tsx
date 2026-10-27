@@ -49,7 +49,7 @@ const photos = [
 
 const flowers = [
   { name: 'Hoa Mẫu đơn', latin: 'Paeonia', image: photos[0] },
-  { name: 'Hoa tulip hồng Hàn Quốc', latin: 'Rosa', image: photos[1] },
+  { name: 'Hoa tulip Hàn Quốc', latin: 'Rosa', image: photos[1] },
   { name: 'Hoa đồng tiền kim', latin: 'Dianthus', image: photos[2] },
   { name: 'Hoa mao lương trắng', latin: 'Ranunculus', image: photos[3] },
   { name: 'Hoa ly kép', latin: 'Chamelaucium', image: photos[4] },
@@ -173,7 +173,7 @@ function Menu({ close }: { close: () => void }) {
     <div className="menu-layer" onClick={close}>
       <aside className="menu-drawer" onClick={e => e.stopPropagation()}>
         <Action className="menu-close" onClick={close} label="Đóng menu"><Icon name="close" /></Action>
-        <div className="menu-mark"><img src="/soha-fleur-logo.png" alt="Soha Fleur Floral Studio" /></div>
+        <div className="menu-mark"><img src="/logo.png" alt="Soha Fleur Floral Studio" /></div>
         <nav>
           <Action onClick={() => go('/about')}>Giới thiệu</Action>
           <Action className="feature-link" onClick={() => go('/pick')}>✿ Tự tay lựa bó<br />hoa của mình</Action>
@@ -229,8 +229,8 @@ function PickFlower({ add }: { add: (item: Omit<CartItem, 'id'>) => void }) {
     <main className="picker-page">
       <div className="picker-copy">
         <p className="eyebrow">Bó hoa của riêng bạn</p>
-        <h1>Chọn một loài hoa</h1>
-        <p>Chạm vào vòng chọn để tìm loài hoa dành cho bạn. Vòng hoa chỉ chuyển động khi bạn tương tác.</p>
+        <h1 style={{ fontSize: '2.5rem', lineHeight: '1.2' }}>Chọn một loài hoa</h1>
+        <p style={{ fontSize: '1rem', lineHeight: '1.2' }}>Chạm vào vòng chọn để tìm loài hoa dành cho bạn. Vòng hoa chỉ chuyển động khi bạn tương tác.</p>
       </div>
       <section className="flower-stage">
         <div className="flower-wheel">
