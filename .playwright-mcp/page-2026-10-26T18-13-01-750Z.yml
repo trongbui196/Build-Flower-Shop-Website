@@ -1,0 +1,23 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - button "Mở menu" [ref=e4] [cursor=pointer]
+    - button "Về trang chủ" [ref=e7] [cursor=pointer]:
+      - img "Soha Fleur Floral Studio" [ref=e8]
+    - button "Giỏ hoa" [ref=e9] [cursor=pointer]
+  - main [ref=e13]:
+    - generic [ref=e14]:
+      - paragraph [ref=e15]: Tự tay tạo nên điều muốn nói
+      - heading "Mỗi đóa hoa, một lời thương." [level=1] [ref=e16]: Mỗi đóa hoa,một lời thương.
+      - paragraph [ref=e17]: Maison Fleur giúp bạn khám phá và lựa chọn từng loài hoa để tạo nên một món quà mang dấu ấn riêng.
+      - button "Bắt đầu chọn hoa" [ref=e18] [cursor=pointer]
+    - region "Các lựa chọn hoa tự động":
+      - paragraph: Khám phá lựa chọn
+      - generic:
+        - generic: Hoa Mẫu đơn
+        - generic: Hoa tulip hồng Hàn Quốc
+        - generic: Hoa đồng tiền kim
+        - generic: Hoa mao lương trắng
+        - generic: Hoa ly kép
+        - generic: Hoa sen nhiều cánh
+        - generic: Hoa hồng môn
+      - paragraph: 02 / 07

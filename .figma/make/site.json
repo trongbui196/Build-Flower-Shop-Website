@@ -1,0 +1,10 @@
+{
+  "description": "Browse flower collections, add blooms to your cart, and explore product details through an intuitive flower shop experience.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
