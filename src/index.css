@@ -20,7 +20,7 @@
 .site-header { height: 4.75rem; padding: 0 clamp(1.25rem,4vw,4rem); display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 20; background: color-mix(in srgb,var(--color-paper) 92%,transparent); backdrop-filter: blur(12px); border-bottom: 1px solid color-mix(in srgb,var(--color-ink) 10%,transparent); }
 .icon-button { width: 2.75rem; height: 2.75rem; display: grid; place-items: center; border-radius: 50%; transition: background .2s; position: relative; }
 .icon-button:hover { background: var(--color-cream); }
-.wordmark img { width: 12rem; height: 4.75rem; max-height: 100%; object-fit: contain; }
+.wordmark img { width: 16rem; height: 4.75rem; max-height: 100%; object-fit: contain; }
 .cart-count { position: absolute; top: .1rem; right: .1rem; width: 1.15rem; height: 1.15rem; display: grid; place-items: center; border-radius: 50%; background: var(--color-ink); color: white; font-size: .65rem; }
 .eyebrow { text-transform: uppercase; letter-spacing: .18em; font-size: .7rem; font-weight: 600; color: var(--color-moss); }
 
