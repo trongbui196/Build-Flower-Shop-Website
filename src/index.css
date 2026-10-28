@@ -208,18 +208,27 @@
 .cart-page {
   min-height: calc(100vh - 4.75rem);
   padding: clamp(3rem,7vw,7rem) 1vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .cart-page > h1 {
+  width: 100%;
+  max-width: 58rem;
+  text-align: center;
   font: 400 clamp(3.3rem,7vw,7rem)/.95 var(--font-display);
   margin: 1rem 0 3rem;
 }
 .cart-empty {
   color: var(--color-moss);
+  text-align: center;
 }
 .cart-list {
   display: grid;
   gap: 1.25rem;
   max-width: 58rem;
+  width: 100%;
+  margin: 0 auto;
 }
 .cart-item {
   display: grid;
@@ -228,6 +237,9 @@
   gap: 1.5rem;
   border-bottom: 1px solid #2f352f33;
   padding-bottom: 1.25rem;
+  width: 100%;
+  max-width: 58rem;
+  margin: 0 auto;
 }
 .cart-item img,.cart-image-placeholder {
   width: 7rem;
@@ -254,7 +266,8 @@
   font-size: .75rem;
 }
 .order-button {
-  margin-top: 2rem;
+  display: block;
+  margin: 2rem auto 0;
   padding: 1rem 1.5rem;
   background: var(--color-ink);
   color: white;
@@ -353,11 +366,20 @@
   .home-copy h1 { font-size: clamp(2.25rem,9vw,3.7rem); }
   .home-copy > p:nth-of-type(2) { max-width: 100%; font-size: .82rem; line-height: 1.6; margin-bottom: 1rem; }
   .home-copy .text-link { margin: 0 auto; }
-  .home-showcase { width: min(100%, 22rem); height: 23rem; min-height: 0; display: flex; align-items: center; justify-content: center; gap: .5rem; pointer-events: auto; }
-  .home-flower-frame { width: min(100%, 15.5rem); height: 18.5rem; }
-  .auto-wheel { position: relative; width: 9.25rem; height: 9.25rem; flex-basis: 9.25rem; mask-image: linear-gradient(transparent,black 20%,black 80%,transparent); display: block; overflow: hidden; }
-  .auto-wheel span { position: absolute; right: 0; top: 50%; transform: translateY(calc(-50% + (var(--wheel-position) * 1.8rem))); font-size: .67rem; }
+  .home-showcase { width: min(100%, 22rem); height: auto; min-height: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .5rem; pointer-events: auto; }
+  .home-showcase > .auto-wheel {
+    order: 1;
+  }
+  .home-showcase > .home-flower-frame {
+    order: 2;
+  }
+  .home-showcase > .showcase-count {
+    order: 3;
+    display: block;
+    margin-top: .25rem;
+  }
   .showcase-note, .showcase-count { position: static; }
+  .showcase-note { display: none; }
   .picker-copy { padding-top: 2rem; }
   .flower-stage { min-height: 22rem; width: min(100%, 24rem); display: flex; flex-direction: column; align-items: center; gap: 1rem; }
   .flower-card-wrap { width: 100%; display: flex; flex-direction: column; align-items: center; }
