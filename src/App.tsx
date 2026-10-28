@@ -29,13 +29,19 @@ import menuImage20 from './assets/menu/20.PNG'
 import menuImage21 from './assets/menu/21.PNG'
 import menuImage22 from './assets/menu/22.PNG'
 import menuImage23 from './assets/menu/23.PNG'
+import menuImage24 from './assets/menu/24.PNG'
+import menuImage25 from './assets/menu/25.PNG'
+import menuImage26 from './assets/menu/26.PNG'
+import menuImage27 from './assets/menu/27.PNG'
+import menuImage28 from './assets/menu/28.PNG'
+import menuImage29 from './assets/menu/29.PNG'
 
 const menuImages = [
   menuImage1, menuImage2, menuImage3, menuImage4, menuImage5, menuImage6,
   menuImage7, menuImage8, menuImage9, menuImage10, menuImage11, menuImage12,
   menuImage13, menuImage14, menuImage15, menuImage16, menuImage17, menuImage18,
-  menuImage19, menuImage20, menuImage21, menuImage22, menuImage23,
-]
+    menuImage19, menuImage20, menuImage21, menuImage22, menuImage23, menuImage24, menuImage25, menuImage26, menuImage27, menuImage28, menuImage29,
+  ]
 
 const photos = [
   photo1,
@@ -133,6 +139,7 @@ const products: Product[] = [
   { name: 'Dragonfly Dreams', category: 4, flowers: 'Ngọc Minh Châu, Calla Lily, Dạ Lan Hương, hoa chuông nhỏ và các cành phụ khô; kèm mô hình chuồn chuồn màu hồng trong suốt', wrapping: 'Không có', tone: 'Hồng - Tím', size: 'M', imageUrl: '' },
   { name: 'Snowlight', category: 4, flowers: 'Calla Lily, Tulip cánh tua trắng, Cẩm Chướng, hoa Nhím Biển, hoa bụi nhỏ màu trắng kem và cỏ tóc tiên/lá măng', wrapping: 'Không có', tone: 'Trắng', size: 'M', imageUrl: '' },
   { name: 'Pearl Butterfly', category: 4, flowers: 'Calla Lily, các lớp rêu Tóc Tiên và hoa nhí màu trắng kem', wrapping: 'Khung vòng ngọc trai cầm tay, phụ kiện cánh bướm, chuỗi ngọc trai nhân tạo và ruy băng lụa mỏng', tone: 'Trắng - Tím', size: 'S', imageUrl: '' },
+
 ]
 
 function Icon({ name }: { name: 'menu' | 'bag' | 'arrow' | 'close' }) {
@@ -169,23 +176,81 @@ function Header({ openMenu, cart }: { openMenu: () => void; cart: number }) {
 
 function Menu({ close }: { close: () => void }) {
   const go = (path: string) => { close(); navigate(path) }
+  const contactLinks = [
+    { label: 'Instagram', href: 'https://www.instagram.com/soha.fleur?mdxt=OGJ1dDhhZTNmdWEx' },
+    { label: 'Facebook', href: 'https://www.facebook.com/profile.php?id=61595125123335' },
+  ]
+
   return (
     <div className="menu-layer" onClick={close}>
       <aside className="menu-drawer" onClick={e => e.stopPropagation()}>
         <Action className="menu-close" onClick={close} label="Đóng menu"><Icon name="close" /></Action>
         <div className="menu-mark"><img src="/logo.png" alt="Soha Fleur Floral Studio" /></div>
         <nav>
-          <Action onClick={() => go('/about')}>Giới thiệu</Action>
+          <Action onClick={() => go('/about')}><p>GIỚI THIỆU</p></Action>
           <Action className="feature-link" onClick={() => go('/pick')}>✿ Tự tay lựa bó<br />hoa của mình</Action>
-          <p>Sản phẩm</p>
+          <Action className="feature-link" onClick={() => go('/products')}><p style={{ margin: 0 }}>SẢN PHẨM</p></Action>
           {categories.map((category, i) => <Action key={category} onClick={() => go(`/category/${i}`)}>{category}</Action>)}
-          <p>Khám phá</p>
-          <Action onClick={() => go('/')}>Blog</Action>
-          <Action onClick={() => go('/')}>Liên hệ</Action>
-          <div className="socials">Instagram · Facebook</div>
+          <div className="menu-contact-group">
+            <p>Liên hệ</p>
+            <br />
+            <div >
+              {contactLinks.map(link => (
+                <a style={{display:'block'}} key={link.label} href={link.href} target="_blank" rel="noreferrer">{link.label}</a>
+              ))}
+            </div>
+          </div>
         </nav>
       </aside>
     </div>
+  )
+}
+
+function AllProductsPage() {
+  const [activeFilter, setActiveFilter] = useState<number | 'all'>('all')
+  const filteredProducts = activeFilter === 'all'
+    ? products.map((product, index) => ({ product, index }))
+    : products
+        .map((product, index) => ({ product, index }))
+        .filter(({ product }) => product.category === activeFilter)
+
+  return (
+    <main className="catalog-page products-page">
+      <p className="eyebrow">Sản phẩm</p>
+      <h1>Tất cả sản phẩm</h1>
+
+      <div className="product-filters" aria-label="Bộ lọc sản phẩm">
+        <Action
+          className={`filter-button ${activeFilter === 'all' ? 'active' : ''}`}
+          onClick={() => setActiveFilter('all')}
+          label="Hiển thị tất cả sản phẩm"
+        >
+          Tất cả
+        </Action>
+        {categories.map((category, index) => (
+          <Action
+            key={category}
+            className={`filter-button ${activeFilter === index ? 'active' : ''}`}
+            onClick={() => setActiveFilter(index)}
+            label={`Lọc theo ${category}`}
+          >
+            {category}
+          </Action>
+        ))}
+      </div>
+
+      <div className="product-grid">
+        {filteredProducts.map(({ product, index }) => (
+          <Action className="product-card" key={`${product.name}-${index}`} onClick={() => navigate(`/product/${index}?from=${encodeURIComponent('/products')}`)}>
+            {product.imageUrl || menuImages[index]
+              ? <img src={product.imageUrl || menuImages[index]} alt={product.name} />
+              : <div className="product-image-placeholder" role="img" aria-label={`Chưa có hình ảnh cho ${product.name}`}>Hình ảnh sản phẩm</div>}
+            <span>{product.name}</span>
+            <small>{product.tone} · Size {product.size}</small>
+          </Action>
+        ))}
+      </div>
+    </main>
   )
 }
 
@@ -200,7 +265,7 @@ function Home() {
       <section className="home-copy">
         <p className="eyebrow">Tự tay tạo nên điều muốn nói</p>
         <h1 style={{ fontSize: '3.0rem', lineHeight: '1.2' }}>Hoa thay<br />lời muốn nói.</h1>
-        <p>Maison Fleur giúp bạn khám phá và lựa chọn từng loài hoa để tạo nên một món quà mang dấu ấn riêng.</p>
+        <p>Soha Fleur giúp bạn khám phá và lựa chọn từng loài hoa để tạo nên một món quà mang dấu ấn riêng.</p>
         <Action className="text-link" onClick={() => navigate('/pick')}>Bắt đầu chọn hoa <Icon name="arrow" /></Action>
       </section>
       <section className="home-showcase" aria-label="Các lựa chọn hoa tự động">
@@ -210,11 +275,24 @@ function Home() {
             let position = index - active
             if (position > flowers.length / 2) position -= flowers.length
             if (position < -flowers.length / 2) position += flowers.length
-            return <span key={item.name} className={index === active ? 'active' : ''} style={{ '--wheel-position': position } as React.CSSProperties}>{item.name}</span>
+            return <span
+              key={item.name}
+              className={index === active ? 'active' : ''}
+              role="button"
+              tabIndex={0}
+              aria-label={`Chọn ${item.name}`}
+              onClick={() => setActive(index)}
+              onKeyDown={event => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault()
+                  setActive(index)
+                }
+              }}
+              style={{ '--wheel-position': position } as React.CSSProperties}>{item.name}</span>
           })}
         </div>
         <div className="home-flower-frame">
-          {flowers.map((item, index) => <img key={item.name} className={index === active ? 'active' : ''} src={item.image} alt="" />)}
+          {flowers.map((item, index) => <img key={item.name} className={index === active ? 'active' : ''} src={item.image} alt={item.name} />)}
         </div>
         <p className="showcase-count">0{active + 1} / 0{flowers.length}</p>
       </section>
@@ -251,10 +329,12 @@ function PickFlower({ add }: { add: (item: Omit<CartItem, 'id'>) => void }) {
             )
           })}
         </div>
-        <div className="flower-card">
-          <img src={flower.image} alt={flower.name} />
+        <div className="flower-card-wrap">
+          <div className="flower-card">
+            <img src={flower.image} alt={flower.name} />
+          </div>
+          <Action className="add-button" onClick={() => add({ name: flower.name, imageUrl: flower.image })}>Thêm vào giỏ hàng</Action>
         </div>
-        <Action className="add-button" onClick={() => add({ name: flower.name, imageUrl: flower.image })}>Thêm vào giỏ hàng</Action>
       </section>
     </main>
   )
@@ -265,9 +345,9 @@ function About() {
     <main className="about-page">
       <section className="about-hero">
         <div className="about-hero-copy">
-          <p className="eyebrow">Về Maison Fleur</p>
+          <p className="eyebrow">Về Soha Fleur</p>
           <h1>Hoa thay lời<br />muốn nói</h1>
-          <p>Maison Fleur là studio hoa cao cấp, mang đến những thiết kế tinh tế và giàu cảm xúc, giúp bạn gửi gắm thông điệp yêu thương theo cách đặc biệt nhất.</p>
+          <p>Soha Fleur là studio hoa cao cấp, mang đến những thiết kế tinh tế và giàu cảm xúc, giúp bạn gửi gắm thông điệp yêu thương theo cách đặc biệt nhất.</p>
           <span className="about-discover">Khám phá về chúng tôi <b>→</b></span>
         </div>
         <img src={photos[0]} alt="Bó hoa hồng phấn" />
@@ -277,7 +357,7 @@ function About() {
         <div>
           <p className="eyebrow">Câu chuyện thương hiệu</p>
           <h2>Từ những điều<br />thuần khiết nhất</h2>
-          <p>Maison Fleur được thành lập với mong muốn mang đến những đóa hoa không chỉ đẹp về hình thức, mà còn chạm đến cảm xúc của người nhận.</p>
+          <p>Soha Fleur được thành lập với mong muốn mang đến những đóa hoa không chỉ đẹp về hình thức, mà còn chạm đến cảm xúc của người nhận.</p>
           <p>Chúng tôi tin rằng, mỗi bó hoa là một câu chuyện, một lời nhắn gửi và một khoảnh khắc đáng nhớ. Vì thế, từng thiết kế đều được chăm chút tỉ mỉ để truyền tải trọn vẹn thông điệp yêu thương.</p>
         </div>
       </section>
@@ -289,7 +369,7 @@ function About() {
       </section>
       <section className="about-banner">
         <img src={photos[2]} alt="Cận cảnh một đóa hoa hồng" />
-        <div><p className="eyebrow">Maison Fleur</p><h2>More than flowers</h2><p>Không chỉ là hoa, mà là cảm xúc.</p></div>
+        <div><p className="eyebrow">Soha Fleur</p><h2>More than flowers</h2><p>Không chỉ là hoa, mà là cảm xúc.</p></div>
         <span>Khám phá bộ sưu tập →</span>
       </section>
     </main>
@@ -306,7 +386,7 @@ function Category({ id }: { id: number }) {
       <p className="eyebrow">Bộ sưu tập</p><h1>{categories[id] || categories[0]}</h1>
       <div className="product-grid">
         {categoryProducts.map(({ product, index }) => (
-          <Action className="product-card" key={product.name} onClick={() => navigate(`/product/${index}`)}>
+          <Action className="product-card" key={product.name} onClick={() => navigate(`/product/${index}?from=${encodeURIComponent(`/category/${id}`)}`)}>
             {product.imageUrl || menuImages[index]
               ? <img src={product.imageUrl || menuImages[index]} alt={product.name} />
               : <div className="product-image-placeholder" role="img" aria-label={`Chưa có hình ảnh cho ${product.name}`}>Hình ảnh sản phẩm</div>}
@@ -322,12 +402,25 @@ function Category({ id }: { id: number }) {
 function Product({ id, add }: { id: number; add: (item: Omit<CartItem, 'id'>) => void }) {
   const product = products[id] || products[0]
   const imageUrl = product.imageUrl || menuImages[id]
+  const backTarget = (() => {
+    const from = new URLSearchParams(window.location.search).get('from')
+    if (from && (from.startsWith('/products') || from.startsWith('/category/'))) {
+      return from
+    }
+    return `/category/${product.category}`
+  })()
+
   return (
     <main className="detail-page">
-      <div className="detail-gallery">
-        {imageUrl
-          ? <img src={imageUrl} alt={product.name} />
-          : <div className="image-placeholder product-detail-placeholder" role="img" aria-label={`Chưa có hình ảnh cho ${product.name}`}>Hình ảnh sản phẩm</div>}
+      <div className="detail-gallery-column">
+        <Action className="back-link" onClick={() => navigate(backTarget)} label={backTarget === '/products' ? 'Quay lại danh sách sản phẩm' : `Quay lại ${categories[product.category]}`}>
+          ← Quay lại
+        </Action>
+        <div className="detail-gallery">
+          {imageUrl
+            ? <img src={imageUrl} alt={product.name} />
+            : <div className="image-placeholder product-detail-placeholder" role="img" aria-label={`Chưa có hình ảnh cho ${product.name}`}>Hình ảnh sản phẩm</div>}
+        </div>
       </div>
       <div className="detail-copy">
         <p className="eyebrow">{categories[product.category]}</p>
@@ -388,9 +481,8 @@ function Cart({ items, remove }: { items: CartItem[]; remove: (id: string) => vo
             <h2 id="order-modal-title">Hoàn tất đơn hàng</h2>
             <p>Vui lòng liên hệ với chúng tôi qua một trong các kênh sau để xác nhận đơn hàng:</p>
             <ul className="order-contact-list">
-              <li><a href="https://www.instagram.com/your-account/" target="_blank" rel="noreferrer"><span>Instagram</span><small>Liên hệ đặt hàng qua Instagram</small></a></li>
-              <li><a href="https://m.me/your-page" target="_blank" rel="noreferrer"><span>Messenger</span><small>Liên hệ đặt hàng qua Messenger</small></a></li>
-              <li><a href="https://zalo.me/your-phone" target="_blank" rel="noreferrer"><span>Zalo</span><small>Liên hệ đặt hàng qua Zalo</small></a></li>
+              <li><a href="https://www.instagram.com/soha.fleur?mdxt=OGJ1dDhhZTNmdWEx" target="_blank" rel="noreferrer"><span>Instagram</span><small>soha.fleur</small></a></li>
+              <li><a href="https://www.facebook.com/profile.php?id=61595125123335" target="_blank" rel="noreferrer"><span>Facebook</span><small>Soha Fleur</small></a></li>
             </ul>
           </section>
         </div>
@@ -428,6 +520,7 @@ export default function App() {
       {path === '/pick' ? <PickFlower add={addToCart} /> :
        path === '/cart' ? <Cart items={cart} remove={id => setCart(current => current.filter(item => item.id !== id))} /> :
        path === '/about' ? <About /> :
+       path === '/products' ? <AllProductsPage /> :
        categoryMatch ? <Category id={Number(categoryMatch[1])} /> :
        productMatch ? <Product id={Number(productMatch[1])} add={addToCart} /> : <Home />}
     </>
