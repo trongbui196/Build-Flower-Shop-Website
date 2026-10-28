@@ -482,7 +482,8 @@ function Cart({ items, remove }: { items: CartItem[]; remove: (id: string) => vo
             <p>Vui lòng liên hệ với chúng tôi qua một trong các kênh sau để xác nhận đơn hàng:</p>
             <ul className="order-contact-list">
               <li><a href="https://www.instagram.com/soha.fleur?mdxt=OGJ1dDhhZTNmdWEx" target="_blank" rel="noreferrer"><span>Instagram</span><small>soha.fleur</small></a></li>
-              <li><a href="https://www.facebook.com/profile.php?id=61595125123335" target="_blank" rel="noreferrer"><span>Facebook</span><small>Soha Fleur</small></a></li>
+              <li><a href="https://www.facebook.com/profile.php?id=61595125123335" target="_blank" rel="noreferrer"><span>Facebook</span><small>Soha Flowers & Gifts 
+</small></a></li>
             </ul>
           </section>
         </div>
