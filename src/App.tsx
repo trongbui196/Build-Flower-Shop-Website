@@ -35,6 +35,8 @@ import menuImage26 from './assets/menu/26.PNG'
 import menuImage27 from './assets/menu/27.PNG'
 import menuImage28 from './assets/menu/28.PNG'
 import menuImage29 from './assets/menu/29.PNG'
+import gt1 from './assets/gioithieu/gt2.png'
+import gt2 from './assets/gioithieu/gt1.png'
 
 const menuImages = [
   menuImage1, menuImage2, menuImage3, menuImage4, menuImage5, menuImage6,
@@ -348,12 +350,12 @@ function About() {
           <p className="eyebrow">Về Soha Fleur</p>
           <h1>Hoa thay lời<br />muốn nói</h1>
           <p>Soha Fleur là studio hoa cao cấp, mang đến những thiết kế tinh tế và giàu cảm xúc, giúp bạn gửi gắm thông điệp yêu thương theo cách đặc biệt nhất.</p>
-          <span className="about-discover">Khám phá về chúng tôi <b>→</b></span>
+          <span className="about-discover"><a href="https://qbrhsncaav8sm9jh.public.blob.vercel-storage.com/Soha%20Fleur%20-%20Brand%20Identity" target="_blank" rel="noopener noreferrer">Khám phá về chúng tôi <b>→</b></a></span>
         </div>
-        <img src={photos[0]} alt="Bó hoa hồng phấn" />
+        <img src={gt1} alt="Bó hoa hồng phấn" />
       </section>
       <section className="about-story">
-        <img src={photos[5]} alt="Hoa hồng trong bình" />
+        <img src={gt2} alt="Hoa hồng trong bình" />
         <div>
           <p className="eyebrow">Câu chuyện thương hiệu</p>
           <h2>Từ những điều<br />thuần khiết nhất</h2>
