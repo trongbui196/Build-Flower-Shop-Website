@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import photo1 from './assets/IMG_7571.PNG'
 import photo2 from './assets/IMG_7584.PNG'
 import photo3 from './assets/IMG_7583.PNG'
@@ -143,6 +143,8 @@ const products: Product[] = [
   { name: 'Pearl Butterfly', category: 4, flowers: 'Calla Lily, các lớp rêu Tóc Tiên và hoa nhí màu trắng kem', wrapping: 'Khung vòng ngọc trai cầm tay, phụ kiện cánh bướm, chuỗi ngọc trai nhân tạo và ruy băng lụa mỏng', tone: 'Trắng - Tím', size: 'S', imageUrl: '' },
 
 ]
+
+const productVideoUrl = 'https://qbrhsncaav8sm9jh.public.blob.vercel-storage.com/Hoa%20c%C6%B0%E1%BB%9Bi%20-%20Velvet%20Romance.mp4'
 
 function Icon({ name }: { name: 'menu' | 'bag' | 'arrow' | 'close' }) {
   const paths = {
@@ -404,6 +406,12 @@ function Category({ id }: { id: number }) {
 function Product({ id, add }: { id: number; add: (item: Omit<CartItem, 'id'>) => void }) {
   const product = products[id] || products[0]
   const imageUrl = product.imageUrl || menuImages[id]
+  const videoRef = useRef<HTMLVideoElement | null>(null)
+  const [activeSlide, setActiveSlide] = useState(0)
+  const slides = [
+    { type: 'video' as const, src: productVideoUrl },
+    ...(imageUrl ? [{ type: 'image' as const, src: imageUrl }] : []),
+  ]
   const backTarget = (() => {
     const from = new URLSearchParams(window.location.search).get('from')
     if (from && (from.startsWith('/products') || from.startsWith('/category/'))) {
@@ -412,6 +420,18 @@ function Product({ id, add }: { id: number; add: (item: Omit<CartItem, 'id'>) =>
     return `/category/${product.category}`
   })()
 
+  useEffect(() => {
+    const currentSlide = slides[activeSlide]
+    if (!currentSlide || currentSlide.type !== 'video') return
+
+    const video = videoRef.current
+    if (!video) return
+
+    video.currentTime = 0
+    video.muted = true
+    video.play().catch(() => undefined)
+  }, [activeSlide, slides])
+
   return (
     <main className="detail-page">
       <div className="detail-gallery-column">
@@ -419,9 +439,38 @@ function Product({ id, add }: { id: number; add: (item: Omit<CartItem, 'id'>) =>
           ← Quay lại
         </Action>
         <div className="detail-gallery">
-          {imageUrl
-            ? <img src={imageUrl} alt={product.name} />
-            : <div className="image-placeholder product-detail-placeholder" role="img" aria-label={`Chưa có hình ảnh cho ${product.name}`}>Hình ảnh sản phẩm</div>}
+          <div className="slide-frame">
+            {slides[activeSlide]?.type === 'video' ? (
+              <video
+                ref={videoRef}
+                className="slide-video"
+                src={slides[activeSlide].src}
+                autoPlay
+                muted
+                playsInline
+                onEnded={() => videoRef.current?.pause()}
+              />
+            ) : (
+              <img src={slides[activeSlide].src} alt={product.name} className="slide-image" />
+            )}
+          </div>
+          {slides.length > 1 && (
+            <div className="slide-controls">
+              <button type="button" className="slide-arrow" onClick={() => setActiveSlide(current => (current - 1 + slides.length) % slides.length)} aria-label="Previous slide">←</button>
+              <div className="slide-dots" aria-label="Product image gallery">
+                {slides.map((slide, index) => (
+                  <button
+                    key={`${slide.type}-${index}`}
+                    type="button"
+                    className={`slide-dot ${index === activeSlide ? 'active' : ''}`}
+                    aria-label={`Go to slide ${index + 1}`}
+                    onClick={() => setActiveSlide(index)}
+                  />
+                ))}
+              </div>
+              <button type="button" className="slide-arrow" onClick={() => setActiveSlide(current => (current + 1) % slides.length)} aria-label="Next slide">→</button>
+            </div>
+          )}
         </div>
       </div>
       <div className="detail-copy">
