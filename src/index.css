@@ -147,10 +147,18 @@
   overflow: hidden;
 }
 .detail-gallery img,
-.detail-gallery video,
 .detail-gallery-slide {
   width: auto;
   max-width: min(100%, 22rem);
+  max-height: calc(100vh - 11rem);
+  height: auto;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+.detail-gallery video {
+  width: auto;
+  max-width: min(100%, 18rem);
   max-height: calc(100vh - 11rem);
   height: auto;
   object-fit: contain;
