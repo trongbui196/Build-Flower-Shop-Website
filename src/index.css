@@ -216,7 +216,7 @@
   width: 100%;
   max-width: 58rem;
   text-align: center;
-  font: 400 clamp(3.3rem,7vw,7rem)/.95 var(--font-display);
+  font: 400 clamp(2rem,3.5vw,3.5rem)/.95 var(--font-display);
   margin: 1rem 0 3rem;
 }
 .cart-empty {
@@ -422,4 +422,8 @@
  .cart-item img,.cart-image-placeholder { width: 5rem; height: 6rem; }
  .cart-item h2 { font-size: 1.2rem; }
   .about-values { grid-template-columns: 1fr; }
+  .wordmark img {
+    width: 7rem;
+    height: 2.5rem;
+  }
 }
