@@ -144,7 +144,10 @@ const products: Product[] = [
 
 ]
 
-const productVideoUrl = 'https://qbrhsncaav8sm9jh.public.blob.vercel-storage.com/Hoa%20c%C6%B0%E1%BB%9Bi%20-%20Velvet%20Romance.mp4'
+const productVideoMap: Record<string, string> = {
+  'Golden Haze': 'https://qbrhsncaav8sm9jh.public.blob.vercel-storage.com/M%E1%BA%ABu%20n%E1%BB%95i%20b%E1%BA%ADt%20-%20Golden%20Haze%20%281%29.mp4',
+  'Velvet Romance':'https://qbrhsncaav8sm9jh.public.blob.vercel-storage.com/Hoa%20c%C6%B0%E1%BB%9Bi%20-%20Velvet%20Romance.mp4'
+}
 
 function Icon({ name }: { name: 'menu' | 'bag' | 'arrow' | 'close' }) {
   const paths = {
@@ -406,12 +409,6 @@ function Category({ id }: { id: number }) {
 function Product({ id, add }: { id: number; add: (item: Omit<CartItem, 'id'>) => void }) {
   const product = products[id] || products[0]
   const imageUrl = product.imageUrl || menuImages[id]
-  const videoRef = useRef<HTMLVideoElement | null>(null)
-  const [activeSlide, setActiveSlide] = useState(0)
-  const slides = [
-    { type: 'video' as const, src: productVideoUrl },
-    ...(imageUrl ? [{ type: 'image' as const, src: imageUrl }] : []),
-  ]
   const backTarget = (() => {
     const from = new URLSearchParams(window.location.search).get('from')
     if (from && (from.startsWith('/products') || from.startsWith('/category/'))) {
@@ -419,18 +416,42 @@ function Product({ id, add }: { id: number; add: (item: Omit<CartItem, 'id'>) =>
     }
     return `/category/${product.category}`
   })()
+  const productClipUrl = productVideoMap[product.name]
+  const slides = productClipUrl
+    ? [{ type: 'video', src: productClipUrl }, { type: 'image', src: imageUrl }]
+    : [{ type: 'image', src: imageUrl }]
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const videoRef = useRef<HTMLVideoElement | null>(null)
 
   useEffect(() => {
-    const currentSlide = slides[activeSlide]
-    if (!currentSlide || currentSlide.type !== 'video') return
+    if (!productClipUrl || currentSlide !== 0) return
 
     const video = videoRef.current
     if (!video) return
 
-    video.currentTime = 0
-    video.muted = true
-    video.play().catch(() => undefined)
-  }, [activeSlide, slides])
+    const playPromise = video.play()
+    if (playPromise) {
+      playPromise.catch(() => {})
+    }
+
+    return () => {
+      video.pause()
+      video.currentTime = 0
+    }
+  }, [productClipUrl, currentSlide])
+
+  useEffect(() => {
+    if (!productClipUrl || currentSlide !== 1) return
+
+    const video = videoRef.current
+    if (video) {
+      video.pause()
+      video.currentTime = 0
+    }
+  }, [productClipUrl, currentSlide])
+
+  const activeSlide = slides[currentSlide]
+  const showSlideNav = Boolean(productClipUrl) && slides.length > 1
 
   return (
     <main className="detail-page">
@@ -439,36 +460,41 @@ function Product({ id, add }: { id: number; add: (item: Omit<CartItem, 'id'>) =>
           ← Quay lại
         </Action>
         <div className="detail-gallery">
-          <div className="slide-frame">
-            {slides[activeSlide]?.type === 'video' ? (
+          {activeSlide.type === 'video'
+            ? (
               <video
                 ref={videoRef}
-                className="slide-video"
-                src={slides[activeSlide].src}
+                className="detail-gallery-slide detail-gallery-video"
+                src={activeSlide.src}
                 autoPlay
                 muted
                 playsInline
-                onEnded={() => videoRef.current?.pause()}
+                onEnded={() => setCurrentSlide(1)}
               />
-            ) : (
-              <img src={slides[activeSlide].src} alt={product.name} className="slide-image" />
+            )
+            : (
+              <img
+                className="detail-gallery-slide"
+                src={activeSlide.src}
+                alt={product.name}
+              />
             )}
-          </div>
-          {slides.length > 1 && (
-            <div className="slide-controls">
-              <button type="button" className="slide-arrow" onClick={() => setActiveSlide(current => (current - 1 + slides.length) % slides.length)} aria-label="Previous slide">←</button>
-              <div className="slide-dots" aria-label="Product image gallery">
-                {slides.map((slide, index) => (
-                  <button
-                    key={`${slide.type}-${index}`}
-                    type="button"
-                    className={`slide-dot ${index === activeSlide ? 'active' : ''}`}
-                    aria-label={`Go to slide ${index + 1}`}
-                    onClick={() => setActiveSlide(index)}
-                  />
-                ))}
-              </div>
-              <button type="button" className="slide-arrow" onClick={() => setActiveSlide(current => (current + 1) % slides.length)} aria-label="Next slide">→</button>
+          {showSlideNav && (
+            <div className="detail-gallery-nav" aria-label="Chuyển giữa video và ảnh">
+              <button
+                type="button"
+                className={currentSlide === 0 ? 'active' : ''}
+                onClick={() => setCurrentSlide(0)}
+              >
+                Video
+              </button>
+              <button
+                type="button"
+                className={currentSlide === 1 ? 'active' : ''}
+                onClick={() => setCurrentSlide(1)}
+              >
+                Ảnh
+              </button>
             </div>
           )}
         </div>
