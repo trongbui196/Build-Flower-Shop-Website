@@ -146,7 +146,9 @@ const products: Product[] = [
 
 const productVideoMap: Record<string, string> = {
   'Golden Haze': 'https://qbrhsncaav8sm9jh.public.blob.vercel-storage.com/M%E1%BA%ABu%20n%E1%BB%95i%20b%E1%BA%ADt%20-%20Golden%20Haze%20%281%29.mp4',
-  'Velvet Romance':'https://qbrhsncaav8sm9jh.public.blob.vercel-storage.com/Hoa%20c%C6%B0%E1%BB%9Bi%20-%20Velvet%20Romance.mp4'
+  'Velvet Romance':'https://qbrhsncaav8sm9jh.public.blob.vercel-storage.com/Hoa%20c%C6%B0%E1%BB%9Bi%20-%20Velvet%20Romance.mp4',
+  'Ivory Muse':'https://qbrhsncaav8sm9jh.public.blob.vercel-storage.com/M%E1%BA%ABu%20n%E1%BB%95i%20b%E1%BA%ADt%20-Ivory%20Muse.mp4',
+  'Blush Hour':'https://qbrhsncaav8sm9jh.public.blob.vercel-storage.com/m%E1%BA%ABu%20n%E1%BB%95i%20b%E1%BA%ADt%20-Blush%20hour.mp4',
 }
 
 function Icon({ name }: { name: 'menu' | 'bag' | 'arrow' | 'close' }) {
