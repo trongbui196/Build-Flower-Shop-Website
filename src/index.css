@@ -159,8 +159,8 @@
 .detail-gallery video {
   width: auto;
   max-width: min(100%, 18rem);
-  max-height: calc(100vh - 11rem);
-  height: auto;
+  height: clamp(18rem, 50vh, 30rem);
+  max-height: none;
   object-fit: contain;
   display: block;
   margin: 0 auto;
@@ -474,9 +474,7 @@
   .detail-gallery {
     max-height: none;
   }
-  .detail-gallery img,
-  .detail-gallery-slide,
-  .detail-gallery video {
+  .detail-gallery img {
     max-height: clamp(18rem, 42vh, 30rem);
   }
 }
